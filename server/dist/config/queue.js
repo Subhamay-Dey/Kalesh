@@ -12,5 +12,5 @@ export const defaultQueueOptions = {
         type: 'exponential',
         delay: 5000,
     },
-    removeOnFail: false,
+    removeOnFail: false
 };

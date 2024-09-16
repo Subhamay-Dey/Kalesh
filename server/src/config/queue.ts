@@ -15,5 +15,5 @@ export const defaultQueueOptions:DefaultJobOptions = {
         type: 'exponential',
         delay: 5000,
     },
-    removeOnFail: false,
+    removeOnFail: false
 }
