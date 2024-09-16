@@ -16,7 +16,7 @@ app.set("view engine", "ejs")
 app.set("views", path.resolve(__dirname, "./views"))
 
 app.get("/", (req:Request, res:Response) => {
-    return res.render("welcome")
+    return res.render("emails/welcome", {name: "Subhamay Dey"})
 })
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
