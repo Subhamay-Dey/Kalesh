@@ -1,11 +1,10 @@
-import HeroSection from "@/components/base/HeroSection";
-import { Button } from "@/components/ui/button";
+import Hero from "@/components/base/Hero";
 import React from "react";
 
 export default function App() {
   return (
     <div>
-        <HeroSection/>
+        <Hero/>
     </div>
   );
 }

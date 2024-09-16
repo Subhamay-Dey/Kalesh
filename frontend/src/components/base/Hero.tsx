@@ -3,7 +3,7 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 
-function HeroSection() {
+function Hero() {
   return (
     <>
         <div className='w-full h-screen flex flex-col justify-center items-center'>
@@ -28,4 +28,4 @@ function HeroSection() {
   )
 }
 
-export default HeroSection
+export default Hero
