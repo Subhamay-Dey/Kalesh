@@ -1,3 +1,5 @@
+import { registerAction } from '@/actions/authActions'
+import SubmitButton from '@/components/common/SubmitButton'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,7 +13,7 @@ function Login() {
             <h1 className='text-4xl font-extrabold bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text text-center'>Kalesh</h1>
             <h1 className='text-3xl font-bold mt-2'>Register</h1>
             <p>Welcome to Kalesh</p>
-            <form action="">
+            <form action={registerAction}>
                 <div className='mt-4'>
                     <Label htmlFor='name'>Name</Label>
                     <Input id='name' type='text' name='name' placeholder='Enter your name'/>
@@ -29,7 +31,7 @@ function Login() {
                     <Input id='cpassword' type='password' name='confirm_password' placeholder='Confirm your password'/>
                 </div>
                 <div className='mt-4'>
-                    <Button className='w-full'>Submit</Button>
+                    <SubmitButton/>
                 </div>
             </form>
             <p className='text-center mt-3'>
