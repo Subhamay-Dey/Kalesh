@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { cn } from "@/lib/utils"
 
+import { Toaster } from "@/components/ui/sonner"
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -24,7 +26,10 @@ export default function RootLayout({
       <body className={cn(
           "min-h-screen bg-slate-50 font-sans antialiased",
           fontSans.variable
-        )}>{children}</body>
+      )}>
+          <Toaster richColors position="top-right"/>
+        {children}
+      </body>
     </html>
   );
 }
