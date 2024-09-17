@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/header') %>
+
+<body>
+    <div class="main">
+        <div class="welcome-container">
+            <h1>Hello <strong><%= name %></strong>👋</h1>
+            <p>Please click on below link to verify your email</p>
+            <a href="<%= url %>" target="_blank">Click on this link</a>
+
+            <p>If you are not able to click above link then pls follow below url and open it in tab.</p>
+            <p><%= url %></p>
+            <%- include('../partials/footer') %>
+        </div>
+    </div>
+</body>
+
+</html>
