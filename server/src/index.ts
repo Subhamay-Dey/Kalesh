@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 8000;
 import path from "path"
 import {fileURLToPath} from "url"
 import { sendEmail } from "./config/mail.js";
+import Routes from "./routes/index.js"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 app.use(express.json())
@@ -17,7 +18,10 @@ app.use(express.urlencoded({extended: false}))
 app.set("view engine", "ejs")
 app.set("views", path.resolve(__dirname, "./views"))
 
-app.get("/", async (req:Request, res:Response) => {
+// Routes
+app.use(Routes)
+
+app.get("/", async(req:Request, res:Response) => {
     const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
         name: "Subhamay Dey"
     })
@@ -27,7 +31,6 @@ app.get("/", async (req:Request, res:Response) => {
 
     return res.json({msg: "Email send successfully!"})
 })
-
 
 import "./jobs/index.js"
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
