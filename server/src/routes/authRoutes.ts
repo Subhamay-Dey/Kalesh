@@ -59,6 +59,8 @@ router.post("/register", async (req:Request, res:Response) => {
     }
 })
 
+// Login route
+
 router.post("/login", async (req: Request, res:Response) => {
     try {
 
@@ -99,6 +101,48 @@ router.post("/login", async (req: Request, res:Response) => {
                 ...JWTPayload,
                 token: `Bearer ${token}`
             }
+        })
+
+    } catch (error) {
+        if(error instanceof ZodError) {
+            const errors = formatError(error)
+            return res.status(422).json({message: "Invalid data", errors});
+        }
+        return res.status(500).json({message: "Something went wrong, please try again!"})
+    }
+})
+
+// Login check 
+
+router.post("/check/credentials", async (req: Request, res:Response) => {
+    try {
+
+        const body = req.body
+        const payload = loginSchema.parse(body)
+
+        // Check email
+
+        const user = await prisma.user.findUnique({where:{email: payload.email}})
+        if(!user && user === null) {
+            return res.status(422).json({errors: {
+                email: "No user found with this email."
+            }})
+        }
+
+        // Check password
+
+        const compare = await bcrypt.compare(payload.password, user.password)
+        if(!compare) {
+            return res.status(422).json({errors: {
+                email: "Invalid Credentials"
+            }})
+        }
+
+        // JWTPayload
+
+        return res.json({
+            message: "Logged in successfully",
+            data: {}
         })
 
     } catch (error) {
