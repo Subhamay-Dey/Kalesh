@@ -26,11 +26,12 @@ router.get("/verify-email", async(req: Request, res:Response) => {
                 return res.redirect(`${process.env.CLIENT_APP_URL}/login`)
             }
         }
+        return res.redirect("/verify-error")
     }
     return res.redirect("/verify-error")
 })
 
-router.get("/verify-email", (req: Request, res: Response) => {
+router.get("/verify-error", async(req: Request, res: Response) => {
     return res.render("auth/emailVerifyError");
 })
 

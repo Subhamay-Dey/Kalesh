@@ -2,7 +2,7 @@ import Register from '@/components/auth/Register'
 import Link from 'next/link'
 import React from 'react'
 
-function Login() {
+function authRegister() {
   return (
     <div className='flex justify-center items-center h-screen'>
         <div className='w-[550px] bg-white rounded-xl px-10 py-5 shadow-md'>
@@ -23,4 +23,4 @@ function Login() {
   )
 }
 
-export default Login
+export default authRegister

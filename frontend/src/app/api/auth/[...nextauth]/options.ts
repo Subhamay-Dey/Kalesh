@@ -5,7 +5,7 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials"
 
 export type CustomSession = {
-    user?:CustomUser;
+    user?: CustomUser;
     expires: ISODateString;
 }
 
@@ -39,13 +39,13 @@ export const authOptions:AuthOptions = {
     CredentialsProvider({
         name: "Credentials",
         credentials: {
-            email: {  },
-            password: {  }
+            email: {},
+            password: {},
           },
           async authorize(credentials, req) {
 
             const {data} = await axios.post(LOGIN_URL, credentials)
-            const user = data?.user
+            const user = data?.data
 
             if (user) {
 

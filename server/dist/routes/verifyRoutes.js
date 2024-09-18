@@ -22,10 +22,11 @@ router.get("/verify-email", async (req, res) => {
                 return res.redirect(`${process.env.CLIENT_APP_URL}/login`);
             }
         }
+        return res.redirect("/verify-error");
     }
     return res.redirect("/verify-error");
 });
-router.get("/verify-email", (req, res) => {
+router.get("/verify-error", async (req, res) => {
     return res.render("auth/emailVerifyError");
 });
 export default router;
