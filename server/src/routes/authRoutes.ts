@@ -5,9 +5,9 @@ import { formatError, renderEmailEjs } from "../helper.js";
 import prisma from "../config/databse.js";
 import bcrypt from "bcrypt";
 import {v4 as uuid4} from "uuid"
-import { name } from "ejs";
 import jwt from "jsonwebtoken"
 import { emailQueue, emailQueueName } from "../jobs/EmailJob.js";
+import authMiddleware from "../middleware/AuthMiddleware.js";
 
 const router = Router();
 
@@ -108,6 +108,11 @@ router.post("/login", async (req: Request, res:Response) => {
         }
         return res.status(500).json({message: "Something went wrong, please try again!"})
     }
+})
+
+router.get("/user", authMiddleware, async(req: Request, res: Response) => {
+    const user = req.user
+    return res.json({data: user})
 })
 
 export default router;
