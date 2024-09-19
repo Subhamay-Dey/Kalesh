@@ -8,12 +8,13 @@ import {v4 as uuid4} from "uuid"
 import jwt from "jsonwebtoken"
 import { emailQueue, emailQueueName } from "../jobs/EmailJob.js";
 import authMiddleware from "../middleware/AuthMiddleware.js";
+import { authLimitter } from "../config/rateLimit.js";
 
 const router = Router();
 
 // Register route
 
-router.post("/register", async (req:Request, res:Response) => {
+router.post("/register", authLimitter, async (req:Request, res:Response) => {
     try {
         const body = req.body;
         const payload = registerSchema.parse(body);
@@ -61,7 +62,7 @@ router.post("/register", async (req:Request, res:Response) => {
 
 // Login route
 
-router.post("/login", async (req: Request, res:Response) => {
+router.post("/login", authLimitter, async (req: Request, res:Response) => {
     try {
 
         const body = req.body
@@ -114,7 +115,7 @@ router.post("/login", async (req: Request, res:Response) => {
 
 // Login check 
 
-router.post("/check/credentials", async (req: Request, res:Response) => {
+router.post("/check/credentials", authLimitter, async (req: Request, res:Response) => {
     try {
 
         const body = req.body

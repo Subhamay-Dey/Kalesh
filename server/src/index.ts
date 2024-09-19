@@ -8,12 +8,12 @@ const PORT = process.env.PORT || 8000;
 
 import path from "path"
 import {fileURLToPath} from "url"
-import { sendEmail } from "./config/mail.js";
 import Routes from "./routes/index.js"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(appLimitter)
 
 app.set("view engine", "ejs")
 app.set("views", path.resolve(__dirname, "./views"))
@@ -34,5 +34,6 @@ app.get("/", async(req:Request, res:Response) => {
 
 import "./jobs/index.js"
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
+import { appLimitter } from "./config/rateLimit.js";
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
