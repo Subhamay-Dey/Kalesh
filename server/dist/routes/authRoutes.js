@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         payload.password = await bcrypt.hash(payload.password, salt);
         const token = await bcrypt.hash(uuid4(), salt);
-        const url = `${process.env.SERVER_APP_URL}/verify-email?email=${payload.email}&token=${token}`;
+        const url = `${process.env.APP_URL}/verify-email?email=${payload.email}&token=${token}`;
         const emailBody = await renderEmailEjs("email-verify", { name: payload.name, url: url });
         // Send email
         await emailQueue.add(emailQueueName, { to: payload.email, subject: "Kalesh email verification", body: emailBody });

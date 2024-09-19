@@ -34,7 +34,7 @@ router.post("/register", async (req:Request, res:Response) => {
         payload.password = await bcrypt.hash(payload.password, salt)
 
         const token = await bcrypt.hash(uuid4(), salt)
-        const url = `${process.env.SERVER_APP_URL}/verify-email?email=${payload.email}&token=${token}`
+        const url = `${process.env.APP_URL}/verify-email?email=${payload.email}&token=${token}`
         const emailBody = await renderEmailEjs("email-verify", {name: payload.name, url:url})
          
         // Send email
