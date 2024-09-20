@@ -1,7 +1,8 @@
-import {ZodError} from "zod"
+import {date, ZodError} from "zod"
 import ejs from "ejs"
 import path from "path"
 import {fileURLToPath} from "url"
+import moment from "moment"
 
 export const formatError = (error:ZodError):any => {
     let errors:any = {} 
@@ -16,4 +17,11 @@ export const renderEmailEjs = async(fileName:string, payload:any) : Promise<stri
     const html:string = await ejs.renderFile(__dirname + `/views/emails/${fileName}.ejs`, payload);
 
     return html
+}
+
+export const checkTimeDiff = (date: Date | string) : number => {
+    const now = moment()
+    const tokenSendAt = moment(date)
+    const difference = moment.duration(now.diff(tokenSendAt))
+    return difference.asHours()
 }

@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import prisma from "../config/databse.js";
 import { authLimitter } from "../config/rateLimit.js";
 import { ZodError } from "zod";
-import { formatError, renderEmailEjs } from "../helper.js";
+import { checkTimeDiff, formatError, renderEmailEjs } from "../helper.js";
 import { forgetPasswordSchema, resetPasswordSchema } from "../validation/passwordValidation.js";
 import bcrypt from "bcrypt";
 import {v4 as uuid4} from "uuid";
@@ -81,6 +81,34 @@ router.post("/reset-password", async (req: Request, res: Response) => {
                 }
             })
         }
+
+        // Check 2 hour timeframe difference
+
+        const hoursDiff = checkTimeDiff(user.token_send_at!)
+
+        if(hoursDiff > 2) {
+            return res.status(422).json({
+                message: "Invalid Data",
+                errors: {
+                    email: "Password rest token has expired, Please go over the process again!"
+                }
+            })
+        }
+
+        // Update password with the new password
+
+        const salt = await bcrypt.genSalt(10)
+        const newPass = await bcrypt.hash(payload.password, salt)
+
+        await prisma.user.update({data:{
+            password: newPass,
+            password_reset_token: null,
+            token_send_at: null,
+        }, where:{
+            email: payload.email,
+        }})
+
+        return res.json({message: "Password rest sucessfully done, Please try to login now!"})
 
      } catch (error) {
         if(error instanceof ZodError) {
