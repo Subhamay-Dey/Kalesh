@@ -4,6 +4,8 @@ import { authLimitter } from "../config/rateLimit.js";
 import { ZodError } from "zod";
 import { formatError } from "../helper.js";
 import { forgetPasswordSchema } from "../validation/passwordValidation.js";
+import bcrypt from "bcrypt";
+import { v4 as uuid4 } from "uuid";
 const router = Router();
 router.post("/forget-password", authLimitter, async (req, res) => {
     try {
@@ -16,6 +18,18 @@ router.post("/forget-password", authLimitter, async (req, res) => {
                     email: "No user found with this email."
                 } });
         }
+        const salt = await bcrypt.genSalt(10);
+        const token = await bcrypt.hash(uuid4(), salt);
+        await prisma.user.update({
+            data: {
+                password_reset_token: token,
+                token_send_at: new Date().toISOString()
+            },
+            where: {
+                email: payload.email
+            },
+        });
+        const url = `${process.env.CLIENT_APP_URL}/reset-password?email=${payload.email}&token=${token}`;
     }
     catch (error) {
         if (error instanceof ZodError) {
