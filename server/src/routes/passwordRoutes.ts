@@ -3,7 +3,7 @@ import prisma from "../config/databse.js";
 import { authLimitter } from "../config/rateLimit.js";
 import { ZodError } from "zod";
 import { formatError, renderEmailEjs } from "../helper.js";
-import { forgetPasswordSchema } from "../validation/passwordValidation.js";
+import { forgetPasswordSchema, resetPasswordSchema } from "../validation/passwordValidation.js";
 import bcrypt from "bcrypt";
 import {v4 as uuid4} from "uuid";
 import { emailQueue, emailQueueName } from "../jobs/EmailJob.js";
@@ -48,7 +48,7 @@ router.post("/forget-password", authLimitter, async (req:Request, res: Response)
             body: html
         })
 
-        return res.json({message: "Email sent successfully! please checkyour email."})
+        return res.json({message: "Password reset link sent successfully! please checkyour email."})
 
     } catch (error) {
         if(error instanceof ZodError) {
@@ -57,6 +57,38 @@ router.post("/forget-password", authLimitter, async (req:Request, res: Response)
         }
         return res.status(500).json({message: "Something went wrong, please try again!"})
     }
+})
+
+router.post("/reset-password", async (req: Request, res: Response) => {
+     try {
+        
+        const body = req.body
+        const payload = resetPasswordSchema.parse(body)
+
+        let user = await prisma.user.findUnique({where:{email: payload.email}})
+
+        if(!user || user == null) {
+            return res.status(422).json({message: "Invalid data", errors:{
+                email: "LInk is not correct make sure you copied correct link."
+            }})
+        }
+
+        if(user.password_reset_token != payload.token) {
+            return res.status(422).json({
+                message:"Invalid Data",
+                error: {
+                    token: "Token is not correct, copy it from the url, check your email!"
+                }
+            })
+        }
+
+     } catch (error) {
+        if(error instanceof ZodError) {
+            const errors = formatError(error)
+            return res.status(422).json({message: "Invalid data", errors});
+        }
+        return res.status(500).json({message: "Something went wrong, please try again!"})
+     }
 })
 
 export default router
