@@ -1,13 +1,15 @@
 "use client"
 
 import React, { useEffect } from 'react'
-import { registerAction } from '@/actions/authActions'
+import { registerAction, resetPasswordAction } from '@/actions/authActions'
 import SubmitButton from '@/components/common/SubmitButton'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
+
+import { useSearchParams } from 'next/navigation' 
 
 function ResetPassword() {
 
@@ -17,7 +19,9 @@ function ResetPassword() {
         errors: {},
     }
 
-    const [state, formAction] = useFormState(registerAction, initstate)
+    const [state, formAction] = useFormState(resetPasswordAction, initstate)
+
+    const sParams = useSearchParams()
 
     useEffect(() => {
         if (state.status === 500 ) {
@@ -29,19 +33,38 @@ function ResetPassword() {
 
   return (
     <form action={formAction}>
+
+        <input type="hidden" name='token' value={sParams.get("token") ?? ""}/>
         <div className='mt-4'>
             <Label htmlFor='email'>Email</Label>
-            <Input id='email' type='email' name='email' placeholder='Enter your email' readOnly/>
+            <Input 
+                id='email' 
+                type='email' 
+                name='email' 
+                placeholder='Enter your email' 
+                readOnly
+                value={sParams.get("email") ?? ""}
+            />
             <span className='text-red-500'>{state.errors?.email}</span>
         </div>
         <div className='mt-4'>
             <Label htmlFor='password'>Password</Label>
-            <Input id='password' type='password' name='password' placeholder='Enter your password'/>
+            <Input 
+                id='password' 
+                type='password' 
+                name='password' 
+                placeholder='Enter your password'
+            />
             <span className='text-red-500'>{state.errors?.password}</span>
         </div>
         <div className='mt-4'>
             <Label htmlFor='cpassword'>Confirm Password</Label>
-            <Input id='cpassword' type='password' name='confirm_password' placeholder='Confirm your password'/>
+            <Input 
+                id='cpassword' 
+                type='password' 
+                name='confirm_password' 
+                placeholder='Confirm your password'
+            />
             <span className='text-red-500'>{state.errors?.confirm_password}</span>
         </div>
         <div className='mt-4'>
