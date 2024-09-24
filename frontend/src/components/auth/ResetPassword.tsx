@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from 'react'
-import { registerAction, resetPasswordAction } from '@/actions/authActions'
+import { resetPasswordAction } from '@/actions/authActions'
 import SubmitButton from '@/components/common/SubmitButton'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 
-import { useSearchParams } from 'next/navigation' 
+import { useSearchParams, useRouter } from 'next/navigation' 
 
 function ResetPassword() {
 
@@ -23,11 +23,16 @@ function ResetPassword() {
 
     const sParams = useSearchParams()
 
+    const router = useRouter()
+
     useEffect(() => {
         if (state.status === 500 ) {
             toast.error(state.message)
         } else if(state.status == 200) {
             toast.success(state.message)
+            setTimeout(() => {
+                router.replace("/login")
+            })
         }
     })
 
