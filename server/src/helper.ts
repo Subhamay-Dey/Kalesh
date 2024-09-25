@@ -3,6 +3,7 @@ import ejs from "ejs"
 import path from "path"
 import {fileURLToPath} from "url"
 import moment from "moment"
+import { MimeSupport } from "./config/fileupload.js"
 
 export const formatError = (error:ZodError):any => {
     let errors:any = {} 
@@ -24,4 +25,17 @@ export const checkTimeDiff = (date: Date | string) : number => {
     const tokenSendAt = moment(date)
     const difference = moment.duration(now.diff(tokenSendAt))
     return difference.asHours()
+}
+
+export const imageValidator = (size:number, mime:string): string | null => {
+    if(bytesToMb(size) > 4) {
+        return "The image should be less than 4 mb"
+    } else if(!MimeSupport.includes(mime)) {
+        return "The image should be of type jpg, png, jpeg, gif, webp"
+    }
+    return null
+}
+
+export const bytesToMb = (bytes: number): number => {
+    return bytes/(1024*1024)
 }
