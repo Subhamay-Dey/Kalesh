@@ -7,9 +7,14 @@ import path from "path";
 import { fileURLToPath } from "url";
 import Routes from "./routes/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import fileUpload from "express-fileupload";
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(appLimitter);
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./views"));
 // Routes

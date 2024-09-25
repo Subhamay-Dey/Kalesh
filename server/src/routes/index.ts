@@ -12,4 +12,5 @@ router.use("/api/auth", PasswordRoutes)
 router.use("/", VerifyRoutes)
 router.use("/kalesh", authMiddleware, KaleshRoutes)
 
+
 export default router
