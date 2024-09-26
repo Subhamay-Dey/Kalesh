@@ -15,6 +15,18 @@ router.get("/", async (req, res) => {
         return res.status(500).json({ message: "Something went wrong." });
     }
 });
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const kalesh = await prisma.kalesh.findUnique({ where: {
+                id: Number(id)
+            } });
+        return res.status(200).json({ message: "Kalesh fetched successfully!", data: kalesh });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "Something went wrong." });
+    }
+});
 router.post("/", async (req, res) => {
     try {
         const body = req.body;
