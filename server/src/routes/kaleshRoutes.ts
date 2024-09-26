@@ -117,4 +117,28 @@ router.put("/:id", async (req: Request, res: Response) => {
     }
 }) 
 
+router.delete("/:id", async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const kalesh = await prisma.kalesh.findUnique({
+            select:{
+                image: true,
+                id: true,
+            },
+            where: {
+                id: Number(id)
+            }
+        })
+        if(kalesh) {
+            removeImage(kalesh?.image)
+        }
+        await prisma.kalesh.delete({where: {
+            id: Number(id)
+        }})
+        return res.status(200).json({message: "Kalesh deleted successfully!", data: kalesh})
+    } catch (error) {
+        return res.status(500).json({message: "Something went wrong."})
+    }
+})
+
 export default router   
