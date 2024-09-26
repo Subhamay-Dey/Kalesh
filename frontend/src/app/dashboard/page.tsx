@@ -1,9 +1,12 @@
+import Navbar from '@/components/base/Navbar'
 import React from 'react'
 
-function page() {
+function dashboard() {
   return (
-    <div>page</div>
+    <div className='container'>
+      <Navbar/>
+    </div>
   )
 }
 
-export default page
+export default dashboard
