@@ -1,12 +1,34 @@
 import { Router } from "express";
 import { ZodError } from "zod";
-import { formatError } from "../helper.js";
+import { formatError, imageValidator, uploadFile } from "../helper.js";
 import { kaleshSchema } from "../validation/kaleshValidation.js";
+import prisma from "../config/databse.js";
 const router = Router();
 router.post("/", async (req, res) => {
     try {
         const body = req.body;
         const payload = kaleshSchema.parse(body);
+        // Checking if image files exits
+        if (req.files?.image) {
+            const image = req.files.image;
+            const validMessage = imageValidator(image.size, image.mimetype);
+            if (validMessage) {
+                return res.status(422).json({ errors: { image: validMessage } });
+            }
+            payload.image = await uploadFile(image);
+        }
+        else {
+            return res.status(422).json({ errors: { image: "Image feild is required." } });
+        }
+        await prisma.kalesh.create({
+            data: {
+                ...payload,
+                user_id: req.user?.id,
+                expires_at: new Date(payload.expires_at),
+                image: payload.image
+            },
+        });
+        return res.json({ message: "kalesh created successfully." });
     }
     catch (error) {
         if (error instanceof ZodError) {

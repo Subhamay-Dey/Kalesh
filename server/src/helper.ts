@@ -4,6 +4,8 @@ import path from "path"
 import {fileURLToPath} from "url"
 import moment from "moment"
 import { MimeSupport } from "./config/fileupload.js"
+import { UploadedFile } from "express-fileupload"
+import {v4 as uuid4} from "uuid"
 
 export const formatError = (error:ZodError):any => {
     let errors:any = {} 
@@ -38,4 +40,14 @@ export const imageValidator = (size:number, mime:string): string | null => {
 
 export const bytesToMb = (bytes: number): number => {
     return bytes/(1024*1024)
+}
+
+export const uploadFile = async (image: UploadedFile) => {
+    const imageExt = image?.name.split(".")
+    const imageName = uuid4() + "." + imageExt[1]
+    const uploadPath = process.cwd() +  "/public/images/" + imageName;
+    image.mv(uploadPath, (err) => {
+        if(err) throw err;
+    })
+    return imageName;
 }

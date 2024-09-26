@@ -8,5 +8,5 @@ const router = Router();
 router.use("/api/auth", AuthRoutes);
 router.use("/api/auth", PasswordRoutes);
 router.use("/", VerifyRoutes);
-router.use("/kalesh", authMiddleware, KaleshRoutes);
+router.use("/api/kalesh", authMiddleware, KaleshRoutes);
 export default router;

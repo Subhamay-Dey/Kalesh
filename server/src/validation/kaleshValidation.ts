@@ -14,4 +14,5 @@ export const kaleshSchema = z.object({
         .min(5, {message: "Please put a valid date"}),
     image:z
         .string()
+        .optional()
 })

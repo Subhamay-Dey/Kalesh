@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import moment from "moment";
 import { MimeSupport } from "./config/fileupload.js";
+import { v4 as uuid4 } from "uuid";
 export const formatError = (error) => {
     let errors = {};
     error.errors?.map((issue) => {
@@ -32,4 +33,14 @@ export const imageValidator = (size, mime) => {
 };
 export const bytesToMb = (bytes) => {
     return bytes / (1024 * 1024);
+};
+export const uploadFile = async (image) => {
+    const imageExt = image?.name.split(".");
+    const imageName = uuid4() + "." + imageExt[1];
+    const uploadPath = process.cwd() + "/public/images/" + imageName;
+    image.mv(uploadPath, (err) => {
+        if (err)
+            throw err;
+    });
+    return imageName;
 };
