@@ -6,6 +6,7 @@ import moment from "moment"
 import { MimeSupport } from "./config/fileupload.js"
 import { UploadedFile } from "express-fileupload"
 import {v4 as uuid4} from "uuid"
+import fs from "fs"
 
 export const formatError = (error:ZodError):any => {
     let errors:any = {} 
@@ -50,4 +51,11 @@ export const uploadFile = async (image: UploadedFile) => {
         if(err) throw err;
     })
     return imageName;
+}
+
+export const removeImage = (imageName: string) => {
+    const path = process.cwd() + "/public/images/" + imageName
+    if(fs.existsSync(path)) {
+        fs.unlinkSync(path)
+    } 
 }

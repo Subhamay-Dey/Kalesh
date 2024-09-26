@@ -1,6 +1,6 @@
 import {Router, Request, Response} from "express"
 import { date, ZodError } from "zod";
-import { formatError, imageValidator, uploadFile } from "../helper.js";
+import { formatError, imageValidator, removeImage, uploadFile } from "../helper.js";
 import { kaleshSchema } from "../validation/kaleshValidation.js";
 import { UploadedFile } from "express-fileupload";
 import prisma from "../config/databse.js";
@@ -57,6 +57,56 @@ router.post("/", async (req: Request, res: Response) => {
             },
         })
         return res.json({message: "kalesh created successfully."})
+
+    } catch (error) {
+        if(error instanceof ZodError) {
+            const errors = formatError(error)
+            return res.status(422).json({message: "Invalid data", errors});
+        }
+        return res.status(500).json({message: "Something went wrong, please try again!"})
+    }
+}) 
+
+router.put("/:id", async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const body = req.body
+        const payload = kaleshSchema.parse(body)
+
+        // Checking if image files exits
+        if(req.files?.image) { 
+            const image = req.files.image as UploadedFile
+            const validMessage = imageValidator(image.size, image.mimetype)
+            if(validMessage) {
+                return res.status(422).json({errors: {image: validMessage}})
+            }
+
+            // Get old image exist
+            const kalesh = await prisma.kalesh.findUnique({
+                select:{
+                    image: true,
+                    id: true,
+                },
+                where: {
+                    id: Number(id)
+                }
+            })
+            if(kalesh) {
+                removeImage(kalesh?.image)
+            }
+            payload.image = await uploadFile(image)
+        }
+
+        await prisma.kalesh.update({
+            where:{
+                id:Number(id)
+            },
+            data:{
+                ...payload,
+                expires_at: new Date(payload.expires_at),
+            },
+        })
+        return res.json({message: "kalesh updated successfully."})
 
     } catch (error) {
         if(error instanceof ZodError) {
