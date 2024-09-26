@@ -4,6 +4,17 @@ import { formatError, imageValidator, uploadFile } from "../helper.js";
 import { kaleshSchema } from "../validation/kaleshValidation.js";
 import prisma from "../config/databse.js";
 const router = Router();
+router.get("/", async (req, res) => {
+    try {
+        const kalesh = await prisma.kalesh.findMany({ where: {
+                user_id: req.user?.id,
+            } });
+        return res.status(200).json({ message: "Kalesh fetched successfully!", data: kalesh });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "Something went wrong." });
+    }
+});
 router.post("/", async (req, res) => {
     try {
         const body = req.body;

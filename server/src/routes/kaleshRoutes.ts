@@ -7,6 +7,17 @@ import prisma from "../config/databse.js";
 
 const router = Router()
 
+router.get("/", async (req: Request, res: Response) => {
+    try {
+        const kalesh = await prisma.kalesh.findMany({where: {
+            user_id: req.user?.id!,
+        }})
+        return res.status(200).json({message: "Kalesh fetched successfully!", data: kalesh})
+    } catch (error) {
+        return res.status(500).json({message: "Something went wrong."})
+    }
+})
+
 router.post("/", async (req: Request, res: Response) => {
     try {
 
@@ -42,6 +53,6 @@ router.post("/", async (req: Request, res: Response) => {
         }
         return res.status(500).json({message: "Something went wrong, please try again!"})
     }
-})
+}) 
 
 export default router   
