@@ -47,15 +47,8 @@ export const authOptions:AuthOptions = {
             const {data} = await axios.post(LOGIN_URL, credentials)
             const user = data?.data
 
-            if (user) {
-
-              return user
-
-            } else {
-
-              return null
-
-            }
+            if (user) return user ;
+            else return null;
 
           }
     }),

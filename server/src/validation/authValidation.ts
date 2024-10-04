@@ -17,6 +17,8 @@ export const registerSchema = z.object({
     message: "Confirm Password not matched", 
     path:["confirm_password"]})
 
+
+
 export const loginSchema = z.object({
     email: z.
         string({message: "Email is required"})

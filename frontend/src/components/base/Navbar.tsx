@@ -27,10 +27,10 @@ function Navbar() {
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setOpen(true)}>Logout</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setOpen(true)} className='cursor-pointer'>Logout</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'>Team</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'>Subscription</DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>
         </nav>

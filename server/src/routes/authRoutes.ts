@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 import { formatError, renderEmailEjs } from "../helper.js";
 import prisma from "../config/databse.js";
 import bcrypt from "bcrypt";
-import {v4 as uuid4} from "uuid"
+import {v4 as uuid4} from "uuid";
 import jwt from "jsonwebtoken"
 import { emailQueue, emailQueueName } from "../jobs/EmailJob.js";
 import authMiddleware from "../middleware/AuthMiddleware.js";
