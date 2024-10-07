@@ -27,11 +27,34 @@ function AddKalesh() {
         <form>
             <div className='mt-4'>
                 <Label htmlFor='title'>Title</Label>
-                <Input id='title' placeholder='Enter your title here...' value={kaleshdata?.title ?? ""} onChange={(e) => setKaleshData({...kaleshdata, title:e.target.value})}/>
+                <Input 
+                  id='title' 
+                  placeholder='Enter your title here...' 
+                  value={kaleshdata?.title ?? ""} 
+                  onChange={(e) => setKaleshData({...kaleshdata, title:e.target.value})}
+                />
             </div>
             <div className='mt-4'>
                 <Label htmlFor='description'>Description</Label>
-                <Textarea id='description' placeholder='Enter your description here...' value={kaleshdata?.description ?? ""} onChange={(e) => setKaleshData({...kaleshdata, description:e.target.value})}/>
+                <Textarea 
+                  id='description' 
+                  placeholder='Enter your description here...' 
+                  value={kaleshdata?.description ?? ""} 
+                  onChange={(e) => setKaleshData({...kaleshdata, description:e.target.value})}
+                />
+            </div>
+            <div className='mt-4'>
+                <Label htmlFor='image'>Image</Label>
+                <Input 
+                  id='image' 
+                  type='file' 
+                  placeholder='Enter your title here...' 
+                />
+            </div>
+
+            <div className='mt-4'>
+                <Label htmlFor='expireAt'>Expire At</Label>
+                <Input id='title' placeholder='Enter your title here...' value={kaleshdata?.title ?? ""} onChange={(e) => setKaleshData({...kaleshdata, title:e.target.value})}/>
             </div>
         </form>
     </DialogContent>
