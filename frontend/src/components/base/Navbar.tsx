@@ -13,7 +13,7 @@ import LogoutModel from '../auth/LogoutModel'
 
 function Navbar() {
 
-    const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <>
