@@ -27,6 +27,20 @@ function AddKalesh() {
     const [open, setOpen] = useState(false)
     const [kaleshdata, setKaleshData] = useState<KaleshFormType>({})
     const [date, setDate] = React.useState<Date | undefined>(new Date())
+    const [image, setImage] = useState<File | null>(null)
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]
+
+      if(file) {
+        setImage(file)
+      }
+    }
+
+    const handleFormSubmit = (event: React.FormEvent) => {
+      event.preventDefault()
+    }
+
   return (
     <Dialog open={open} onOpenChange={setOpen} >
     <DialogTrigger asChild>
@@ -36,7 +50,7 @@ function AddKalesh() {
         <DialogHeader>
         <DialogTitle>Create Kalesh</DialogTitle>
         </DialogHeader>
-        <form>
+        <form onSubmit={handleFormSubmit}>
             <div className='mt-4'>
                 <Label htmlFor='title'>Title</Label>
                 <Input 
@@ -61,6 +75,7 @@ function AddKalesh() {
                   id='image' 
                   type='file' 
                   placeholder='Enter your title here...' 
+                  onChange={handleImageChange}
                 />
             </div>
 
