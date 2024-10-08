@@ -6,6 +6,8 @@ const app:Application = express();
 
 const PORT = process.env.PORT || 8000;
 
+import cors from "cors"
+
 import path from "path"
 import {fileURLToPath} from "url"
 import Routes from "./routes/index.js"
@@ -14,6 +16,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import fileUpload from "express-fileupload"
 
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({extended: false}))
 app.use(appLimitter)
 app.use(fileUpload({
