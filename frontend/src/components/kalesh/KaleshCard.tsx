@@ -26,7 +26,7 @@ function KaleshCard({kalesh}:{kalesh:KaleshType}) {
             width={500}
             height={500}
             alt={kalesh.title}
-            className='rounded-md w-full h-[220px] object-contain'
+            className='rounded-md w-full h-[220px]'
         
         />}
         <p>{kalesh.description}</p>
