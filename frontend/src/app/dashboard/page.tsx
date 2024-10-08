@@ -4,6 +4,7 @@ import React from 'react'
 import { authOptions, CustomSession } from '../api/auth/[...nextauth]/options'
 import { getServerSession } from 'next-auth'
 import { fetchkalesh } from '../fetch/kaleshfetch'
+import KaleshCard from '@/components/kalesh/KaleshCard'
 
 async function dashboard() {
 
@@ -17,6 +18,11 @@ async function dashboard() {
       <Navbar/>
       <div className='text-end mt-10'>
       <AddKalesh user={session?.user!}/>
+      </div>
+      <div className='flex space-x-5 space-y-4 items-center flex-wrap'>
+        {kaleshs.length > 0 && kaleshs.map((item, index) => (
+          <KaleshCard kalesh={item} key={index}/>
+        ))}
       </div>
     </div>
   )
