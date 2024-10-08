@@ -66,6 +66,7 @@ function AddKalesh({user}:{user:CustomUser}) {
           setKaleshData({})
           setDate(null)
           setImage(null)
+          setErrors({})
           toast.success("Kalesh added successfully!")
           setOpen(false)
         }
