@@ -6,36 +6,35 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "@/components/ui/dialog";
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 
-import { CalendarIcon } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 import axios, { AxiosError } from 'axios';
 import { KALESH_URL } from '@/lib/apiEndPoints';
 import { CustomUser } from '@/app/api/auth/[...nextauth]/options';
 import { toast } from 'sonner';
 
-function EditKalesh({user, kalesh, open, setOpen}:{user:CustomUser, kalesh:KaleshType, open:boolean, setOpen:Dispatch<SetStateAction<boolean>>}) {
+function EditKalesh({token, kalesh, open, setOpen}:{token:string, kalesh:KaleshType, open:boolean, setOpen:Dispatch<SetStateAction<boolean>>}) {
     const [kaleshdata, setKaleshData] = useState<KaleshFormType>({
         title:kalesh.title,
         description:kalesh.description,
-    })
-    const [date, setDate] = useState<Date | null>(new Date(kalesh.expire_at))
-    const [image, setImage] = useState<File | null>(null)
-    const [loading, setLoading] = useState(false)
-    const [errors, setErrors] = useState<KaleshFormErrorType>({})
+    });
+    const [date, setDate] = useState<Date | null>(new Date(kalesh.expire_at));
+    const [image, setImage] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState<KaleshFormErrorType>({});
 
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
@@ -60,7 +59,7 @@ function EditKalesh({user, kalesh, open, setOpen}:{user:CustomUser, kalesh:Kales
 
         const {data} = await axios.put(`${KALESH_URL}/${kalesh.id}`, formData, {
           headers: {
-            Authorization: user.token
+            Authorization: token
           }
         })
         setLoading(false)

@@ -13,12 +13,12 @@ import { getImageUrl } from '@/lib/utils'
 import { Button } from '../ui/button'
 import KaleshMenuCard from './KaleshMenuCard'
 
-function KaleshCard({kalesh}:{kalesh:KaleshType}) {
+function KaleshCard({kalesh, token}:{kalesh:KaleshType, token:string}) {
   return (
     <Card>
     <CardHeader className='flex justify-between items-center flex-row'>
         <CardTitle>{kalesh.title}</CardTitle>
-        <KaleshMenuCard kalesh={kalesh}/>
+        <KaleshMenuCard kalesh={kalesh} token={token}/>
     </CardHeader>
     <CardContent className='h-[300px]'>
         {kalesh?.image && <Image

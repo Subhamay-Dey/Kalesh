@@ -21,7 +21,7 @@ async function dashboard() {
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
         {kaleshs.length > 0 && kaleshs.map((item, index) => 
-          <KaleshCard kalesh={item} key={index}/>
+          <KaleshCard kalesh={item} key={index} token={session?.user?.token!}/>
         )}
       </div>
     </div>
