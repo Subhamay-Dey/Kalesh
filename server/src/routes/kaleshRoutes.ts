@@ -11,7 +11,11 @@ router.get("/", async (req: Request, res: Response) => {
     try {
         const kalesh = await prisma.kalesh.findMany({where: {
             user_id: req.user?.id!,
-        }})
+        },
+        orderBy: {
+            id: "desc"
+        }
+    })
         return res.status(200).json({message: "Kalesh fetched successfully!", data: kalesh})
     } catch (error) {
         return res.status(500).json({message: "Something went wrong."})

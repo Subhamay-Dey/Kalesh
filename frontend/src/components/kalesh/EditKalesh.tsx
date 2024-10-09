@@ -23,8 +23,8 @@ import {
 
 import axios, { AxiosError } from 'axios';
 import { KALESH_URL } from '@/lib/apiEndPoints';
-import { CustomUser } from '@/app/api/auth/[...nextauth]/options';
 import { toast } from 'sonner';
+import { clearCache } from '@/actions/commonActions';
 
 function EditKalesh({token, kalesh, open, setOpen}:{token:string, kalesh:KaleshType, open:boolean, setOpen:Dispatch<SetStateAction<boolean>>}) {
     const [kaleshdata, setKaleshData] = useState<KaleshFormType>({
@@ -64,6 +64,7 @@ function EditKalesh({token, kalesh, open, setOpen}:{token:string, kalesh:KaleshT
         })
         setLoading(false)
         if(data?.message) {
+          clearCache("dashboard")
           setKaleshData({})
           setDate(null)
           setImage(null)

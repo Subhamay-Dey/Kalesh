@@ -26,6 +26,7 @@ import axios, { AxiosError } from 'axios';
 import { KALESH_URL } from '@/lib/apiEndPoints';
 import { CustomUser } from '@/app/api/auth/[...nextauth]/options';
 import { toast } from 'sonner';
+import { clearCache } from '@/actions/commonActions';
 
 function AddKalesh({user}:{user:CustomUser}) {
     const [open, setOpen] = useState(false)
@@ -63,6 +64,7 @@ function AddKalesh({user}:{user:CustomUser}) {
         })
         setLoading(false)
         if(data?.message) {
+          clearCache("dashboard")
           setKaleshData({})
           setDate(null)
           setImage(null)
