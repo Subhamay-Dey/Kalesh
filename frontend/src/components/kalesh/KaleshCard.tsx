@@ -11,15 +11,16 @@ import {
 import Image from 'next/image'
 import { getImageUrl } from '@/lib/utils'
 import { Button } from '../ui/button'
-  
+import KaleshMenuCard from './KaleshMenuCard'
 
 function KaleshCard({kalesh}:{kalesh:KaleshType}) {
   return (
     <Card>
-    <CardHeader>
+    <CardHeader className='flex justify-between items-center flex-row'>
         <CardTitle>{kalesh.title}</CardTitle>
+        <KaleshMenuCard kalesh={kalesh}/>
     </CardHeader>
-    <CardContent>
+    <CardContent className='h-[300px]'>
         {kalesh?.image && <Image
         
             src={getImageUrl(kalesh.image)}

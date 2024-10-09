@@ -19,10 +19,10 @@ async function dashboard() {
       <div className='text-end mt-10'>
       <AddKalesh user={session?.user!}/>
       </div>
-      <div className='flex space-x-5 space-y-4 items-center flex-wrap'>
-        {kaleshs.length > 0 && kaleshs.map((item, index) => (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
+        {kaleshs.length > 0 && kaleshs.map((item, index) => 
           <KaleshCard kalesh={item} key={index}/>
-        ))}
+        )}
       </div>
     </div>
   )
