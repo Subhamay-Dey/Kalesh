@@ -41,7 +41,7 @@ function DeleteKalesh({open, setOpen, id, token}:{open:boolean, setOpen: Dispatc
     <AlertDialog open={open} onOpenChange={setOpen}>
     <AlertDialogContent>
         <AlertDialogHeader>
-        <AlertDialogTitle>Ready to logout!</AlertDialogTitle>
+        <AlertDialogTitle>Ready to Delete!</AlertDialogTitle>
         <AlertDialogDescription>
             This action will delete your kalesh from our database permanently!
         </AlertDialogDescription>

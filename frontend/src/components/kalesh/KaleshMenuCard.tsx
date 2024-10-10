@@ -5,7 +5,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import DeleteKalesh from './DeleteKalesh';
 const EditKalesh = dynamic(() => import("./EditKalesh"));
@@ -39,12 +39,12 @@ function KaleshMenuCard({kalesh, token}:{kalesh:KaleshType, token:string}) {
       )}
       <DropdownMenu>
       <DropdownMenuTrigger>
-          <EllipsisVertical/>
+        <Menu />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setOpen(true)} className='cursor-pointer'>Edit</DropdownMenuItem>
-          <DropdownMenuItem className='cursor-pointer'>Copy Link</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setDeleteOpen(true)} className='cursor-pointer'>Delete</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)} className='cursor-pointer font-semibold'>Edit</DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer font-semibold'>Copy Link</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setDeleteOpen(true)} className='cursor-pointer font-semibold'>Delete</DropdownMenuItem>
       </DropdownMenuContent>
       </DropdownMenu>
     </>

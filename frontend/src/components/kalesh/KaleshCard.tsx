@@ -30,10 +30,10 @@ function KaleshCard({kalesh, token}:{kalesh:KaleshType, token:string}) {
             className='rounded-md w-full h-[220px]'
         
         />}
-        <p>{kalesh.description}</p>
+        <p className='mt-6 font-semibold'>{kalesh.description}</p>
         <p>
-            <strong>Expires At:</strong>
-            {new Date(kalesh.expire_at).toDateString()}
+            {/* <strong>Expires At:</strong>
+            {new Date(kalesh.expire_at).toDateString()} */}
         </p>
     </CardContent>
     <CardFooter>
