@@ -17,8 +17,11 @@ import { clearCache } from '@/actions/commonActions'
 
 function DeleteKalesh({open, setOpen, id, token}:{open:boolean, setOpen: Dispatch<SetStateAction<boolean>>, id:number, token: string}) {
 
+  const [loading, setLoading] = useState(false)
+
   const deleteKalesh = async () => {
     try {
+        setLoading(true)
         const {data} = await axios.delete(`${KALESH_URL}/${id}`, {
             headers: {
                 Authorization: token
@@ -29,6 +32,7 @@ function DeleteKalesh({open, setOpen, id, token}:{open:boolean, setOpen: Dispatc
             toast.success(data.message)
         }
     } catch (error) {
+        setLoading(false)
         toast.error("Something went wrong!")
     }
   }
@@ -44,7 +48,8 @@ function DeleteKalesh({open, setOpen, id, token}:{open:boolean, setOpen: Dispatc
         </AlertDialogHeader>
         <AlertDialogFooter>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction onClick={deleteKalesh}>Yes, Continue</AlertDialogAction>
+        <AlertDialogAction onClick={deleteKalesh} disabled={loading}
+        >{loading ? "Processing..." : "Yes Continue"}</AlertDialogAction>
         </AlertDialogFooter>
     </AlertDialogContent>
     </AlertDialog>
